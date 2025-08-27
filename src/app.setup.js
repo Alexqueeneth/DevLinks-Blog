@@ -9,6 +9,9 @@ import { LoggerService } from './common/logger.service.js';
 import { ConfigService } from './common/config.service.js';
 import { ErrorMiddleware } from './common/middleware/error.middleware.js';
 import { sendResponse } from './common/utils.common.js';
+import authRoutes from './Auth/auth.routes.js';
+import userRoutes from './users/user.routes.js';
+import postRoutes from './posts/post.routes.js';
 
 class Application {
     constructor() {
@@ -27,6 +30,9 @@ class Application {
         this.app.use(compression());
         this.app.use(express.json({ limit: '10mb' }));
         this.app.use(express.urlencoded({ extended: true }));
+        this.app.use("/api/auth", authRoutes);
+        this.app.use("/api/users", userRoutes);
+        this.app.use("/api/posts", postRoutes);
     }
 
     setupRoutes() {
