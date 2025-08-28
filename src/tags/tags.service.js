@@ -1,4 +1,4 @@
-import { TagModel } from "../database/models/tag.models.js";
+import { TagModel } from "../database/models/tags.models.js";
 
 export class TagService {
   static async createTag(data) {

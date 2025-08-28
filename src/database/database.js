@@ -5,10 +5,13 @@ import { SequelizeAdapter } from './adapters/sequelize.adapter.js';
 export class DatabaseService {
     constructor(){
         this.configService = new ConfigService();
-        this.mongooseAdapter = new MongooseAdapter();
-        this.sequelizeAdapter = new SequelizeAdapter();
-
-        this.adapter = this.configService.getOrThrow('DATABASE_ADAPTER', 'mongoose');
+        this.adapter = ConfigService.get('DATABASE_ADAPTER', 'mongoose');
+        
+        if(this.adapter === 'mongoose'){
+            this.mongooseAdapter = new MongooseAdapter();
+        } else if(this.adapter === 'sequelize'){
+            this.sequelizeAdapter = new SequelizeAdapter();
+        }
     }
 
     async connect(){

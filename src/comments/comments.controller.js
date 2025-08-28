@@ -1,4 +1,4 @@
-import { CommentService } from "./comment.service.js";
+import { CommentService } from "./comments.service.js";
 import { sendResponse } from "../common/utils.common.js";
 
 export class CommentController {

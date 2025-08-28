@@ -1,7 +1,7 @@
 import { ReactionModel } from "../database/models/reactions.models.js";
 import { PostModel } from "../database/models/post.models.js";
 import { CommentModel } from "../database/models/comment.models.js";
-import { NotificationService } from "../notifications/notifications.service.js";
+import { NotificationService } from "../notifications/notification.s.service.js";
 
 
 export class ReactionService {

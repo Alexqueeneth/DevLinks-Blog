@@ -1,4 +1,4 @@
-import { BookmarksService } from "./bookmarks.service.js";
+import { BookmarksService } from "./booksmarks.service.js";
 import { sendResponse } from "../common/utils.common.js";
 
 export class BookmarksController {

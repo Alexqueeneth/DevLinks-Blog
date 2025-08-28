@@ -1,6 +1,6 @@
 import { PostModel } from "../database/models/post.models.js";
-import { CategoryModel } from "../database/models/category.models.js";
-import { TagModel } from "../database/models/tag.models.js";
+import { CategoryModel } from "../database/models/categories.models.js";
+import { TagModel } from "../database/models/tags.models.js";
 
 export class PostService {
   // ✅ Create Post with category/tag validation

@@ -5,8 +5,8 @@ import { AuthMiddleware } from "../common/middleware/auth.middleware.js";
 const router = Router();
 
 // follow & unfollow
-router.post("/:userId", AuthMiddleware.authenticate, FollowersController.followUser);
-router.delete("/:userId", AuthMiddleware.authenticate, FollowersController.unfollowUser);
+router.post("/:userId", AuthMiddleware.verifyToken, FollowersController.followUser);
+router.delete("/:userId", AuthMiddleware.verifyToken, FollowersController.unfollowUser);
 
 // lists
 router.get("/followers/:userId", FollowersController.getFollowers);

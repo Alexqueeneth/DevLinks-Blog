@@ -1,6 +1,6 @@
 import bcrypt from "bcryptjs";
-import User from "../users/user.model.js";
-import { generateAccessToken, generateRefreshToken } from "../../utils/jwt.js";
+import User from "../database/models/user.models.js";
+import { generateAccessToken, generateRefreshToken } from "../utils/jwt.js";
 
 class AuthService {
   async register({ name, email, password }) {
