@@ -2,14 +2,20 @@ import mongoose from "mongoose";
 
 const reactionSchema = new mongoose.Schema(
   {
+    type: {
+      type: String,
+      enum: ["like", "dislike", "love", "laugh", "angry"],
+      required: true,
+    },
     user: { type: mongoose.Schema.Types.ObjectId, ref: "User", required: true },
-    type: { type: String, enum: ["like", "dislike"], required: true },
-    entityId: { type: mongoose.Schema.Types.ObjectId, required: true },
-    entityType: { type: String, enum: ["Post", "Comment"], required: true }
+    post: { type: mongoose.Schema.Types.ObjectId, ref: "Post" },
+    comment: { type: mongoose.Schema.Types.ObjectId, ref: "Comment" },
   },
   { timestamps: true }
 );
 
-reactionSchema.index({ user: 1, entityId: 1, entityType: 1 }, { unique: true }); // one reaction per user/entity
+// A user should not react the same way twice on the same post/comment
+reactionSchema.index({ user: 1, post: 1, type: 1 }, { unique: true, sparse: true });
+reactionSchema.index({ user: 1, comment: 1, type: 1 }, { unique: true, sparse: true });
 
 export const ReactionModel = mongoose.model("Reaction", reactionSchema);

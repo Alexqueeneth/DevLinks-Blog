@@ -1,15 +1,19 @@
 import Joi from "joi";
 
 export const createPostSchema = Joi.object({
-  title: Joi.string().max(200).required(),
+  title: Joi.string().min(3).max(255).required(),
   content: Joi.string().required(),
-  tags: Joi.array().items(Joi.string().trim()).optional(),
-  category: Joi.string().optional(),
+  categories: Joi.array().items(Joi.string()),
+  tags: Joi.array().items(Joi.string()),
+  status: Joi.string().valid("draft", "published", "scheduled").default("draft"),
+  publishedAt: Joi.date().optional(),
 });
 
 export const updatePostSchema = Joi.object({
-  title: Joi.string().max(200).optional(),
-  content: Joi.string().optional(),
-  tags: Joi.array().items(Joi.string().trim()).optional(),
-  category: Joi.string().optional(),
+  title: Joi.string().min(3).max(255),
+  content: Joi.string(),
+  categories: Joi.array().items(Joi.string()),
+  tags: Joi.array().items(Joi.string()),
+  status: Joi.string().valid("draft", "published", "scheduled"),
+  publishedAt: Joi.date().optional(),
 });

@@ -4,13 +4,14 @@ import { sendResponse } from "../common/utils.common.js";
 export class CommentController {
   static async create(req, res, next) {
     try {
-      const { content } = req.body;
+      const { content, parentComment } = req.body;
       const { postId } = req.params;
 
       const comment = await CommentService.createComment({
         postId,
         author: req.user._id,
         content,
+        parentComment,
       });
 
       return sendResponse(res, 201, true, "Comment created", comment);

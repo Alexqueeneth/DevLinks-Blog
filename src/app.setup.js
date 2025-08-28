@@ -12,7 +12,17 @@ import { sendResponse } from './common/utils.common.js';
 import authRoutes from './Auth/auth.routes.js';
 import userRoutes from './users/user.routes.js';
 import postRoutes from './posts/post.routes.js';
+import commentRoutes from './comments/comments.routes.js';
+import categoriesRoutes from './categories/categories.routes.js';
+import tagsRoutes from './tags/tags.routes.js';
+import mediaRouter from './media/media.routes.js';
+import reactionRoutes from './reactions/reactions.routes.js';
+import searchRouter from './search/search.routes.js';
+import followerRoutes from "./followers/followers.routes.js";
+import bookmarkRoutes from "./bookmarks/bookmarks.routes.js";
 
+
+ 
 class Application {
     constructor() {
         this.app = express();
@@ -33,6 +43,14 @@ class Application {
         this.app.use("/api/auth", authRoutes);
         this.app.use("/api/users", userRoutes);
         this.app.use("/api/posts", postRoutes);
+        this.app.use("/api/comments", commentRoutes);
+        this.app.use("/api/categories", categoriesRoutes);
+        this.app.use("/api/tags", tagsRoutes);
+        this.app.use("/api/media", mediaRouter);
+        this.app.use("/api/reactions", reactionRoutes);
+        this.app.use("/api/search", searchRouter);
+        this.app.use("/api/followers", followerRoutes);
+        this.app.use("/api/bookmarks", bookmarkRoutes);
     }
 
     setupRoutes() {

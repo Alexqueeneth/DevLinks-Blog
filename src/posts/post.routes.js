@@ -1,33 +1,27 @@
 import { Router } from "express";
 import { PostController } from "./post.controller.js";
-import { AuthMiddleware } from "../common/middleware/auth.middleware.js";
-import { ValidationMiddleware } from "../common/middleware/validation.middleware.js";
+import { validate } from "../common/middleware/validation.middleware.js";
 import { createPostSchema, updatePostSchema } from "./post.validation.js";
+import { authMiddleware } from "../common/middleware/auth.middleware.js";
 
 const router = Router();
 
-// Public
-router.get("/", PostController.getAll);
-router.get("/:id", PostController.getOne);
+// CRUD
+router.post("/", authMiddleware, validate(createPostSchema), PostController.createPost);
+router.get("/", PostController.getPosts);
+router.get("/:id", PostController.getPostById);
+router.put("/:id", authMiddleware, validate(updatePostSchema), PostController.updatePost);
+router.delete("/:id", authMiddleware, PostController.deletePost);
 
-// Protected
-router.post(
-  "/",
-  AuthMiddleware.verifyToken,
-  ValidationMiddleware.validate(createPostSchema),
-  PostController.create
-);
+// publishing
+router.put("/:id/publish", authMiddleware, PostController.publishPost);
+router.put("/:id/schedule", authMiddleware, PostController.schedulePost);
 
-router.put(
-  "/:id",
-  AuthMiddleware.verifyToken,
-  ValidationMiddleware.validate(updatePostSchema),
-  PostController.update
-);
+// reactions
+router.post("/:id/reactions", authMiddleware, PostController.addReaction);
+router.delete("/:id/reactions", authMiddleware, PostController.removeReaction);
 
-router.delete("/:id", AuthMiddleware.verifyToken, PostController.delete);
-
-router.post("/:id/like", AuthMiddleware.verifyToken, PostController.like);
-router.post("/:id/unlike", AuthMiddleware.verifyToken, PostController.unlike);
+// retrieval
+router.get("/status/published", PostController.getPublishedPosts);
 
 export default router;

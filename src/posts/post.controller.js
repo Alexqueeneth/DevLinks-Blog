@@ -1,68 +1,98 @@
 import { PostService } from "./post.service.js";
-import { sendResponse } from "../common/utils.common.js";
+import { sendResponse } from "../common/utils/sendResponse.js";
 
 export class PostController {
-  static async create(req, res) {
+  static async createPost(req, res, next) {
     try {
       const post = await PostService.createPost(req.body, req.user.id);
-      return sendResponse(res, 201, true, "Post created successfully", post);
-    } catch (err) {
-      return sendResponse(res, 400, false, err.message);
+      sendResponse(res, 201, true, "Post created", post);
+    } catch (error) {
+      next(error);
     }
   }
 
-  static async getAll(req, res) {
+  static async getPosts(req, res, next) {
     try {
-      const posts = await PostService.getAllPosts();
-      return sendResponse(res, 200, true, "Posts fetched successfully", posts);
-    } catch (err) {
-      return sendResponse(res, 400, false, err.message);
+      const posts = await PostService.getPosts();
+      sendResponse(res, 200, true, "Posts retrieved", posts);
+    } catch (error) {
+      next(error);
     }
   }
 
-  static async getOne(req, res) {
+  static async getPostById(req, res, next) {
     try {
       const post = await PostService.getPostById(req.params.id);
-      if (!post) return sendResponse(res, 404, false, "Post not found");
-      return sendResponse(res, 200, true, "Post fetched successfully", post);
-    } catch (err) {
-      return sendResponse(res, 400, false, err.message);
+      sendResponse(res, 200, true, "Post retrieved", post);
+    } catch (error) {
+      next(error);
     }
   }
 
-  static async update(req, res) {
+  static async updatePost(req, res, next) {
     try {
-      const post = await PostService.updatePost(req.params.id, req.body, req.user.id);
-      return sendResponse(res, 200, true, "Post updated successfully", post);
-    } catch (err) {
-      return sendResponse(res, 400, false, err.message);
+      const post = await PostService.updatePost(req.params.id, req.body);
+      sendResponse(res, 200, true, "Post updated", post);
+    } catch (error) {
+      next(error);
     }
   }
 
-  static async delete(req, res) {
+  static async deletePost(req, res, next) {
     try {
-      const post = await PostService.deletePost(req.params.id, req.user);
-      return sendResponse(res, 200, true, "Post deleted successfully", post);
-    } catch (err) {
-      return sendResponse(res, 400, false, err.message);
+      await PostService.deletePost(req.params.id, req.user.id);
+      sendResponse(res, 200, true, "Post deleted");
+    } catch (error) {
+      next(error);
     }
   }
 
-  static async like(req, res) {
+  static async publishPost(req, res, next) {
     try {
-      const post = await PostService.likePost(req.params.id, req.user.id);
-      return sendResponse(res, 200, true, "Post liked successfully", post);
-    } catch (err) {
-      return sendResponse(res, 400, false, err.message);
+      const post = await PostService.publishPost(req.params.id, req.user.id);
+      sendResponse(res, 200, true, "Post published", post);
+    } catch (error) {
+      next(error);
     }
   }
 
-  static async unlike(req, res) {
+  static async schedulePost(req, res, next) {
     try {
-      const post = await PostService.unlikePost(req.params.id, req.user.id);
-      return sendResponse(res, 200, true, "Post unliked successfully", post);
-    } catch (err) {
-      return sendResponse(res, 400, false, err.message);
+      const post = await PostService.schedulePost(
+        req.params.id,
+        req.user.id,
+        req.body.publishDate
+      );
+      sendResponse(res, 200, true, "Post scheduled", post);
+    } catch (error) {
+      next(error);
+    }
+  }
+
+  static async addReaction(req, res, next) {
+    try {
+      const post = await PostService.addReaction(req.params.id, req.user.id, req.body.type);
+      sendResponse(res, 200, true, "Reaction added", post);
+    } catch (error) {
+      next(error);
+    }
+  }
+
+  static async removeReaction(req, res, next) {
+    try {
+      const post = await PostService.removeReaction(req.params.id, req.user.id, req.body.type);
+      sendResponse(res, 200, true, "Reaction removed", post);
+    } catch (error) {
+      next(error);
+    }
+  }
+
+  static async getPublishedPosts(req, res, next) {
+    try {
+      const posts = await PostService.getPublishedPosts();
+      sendResponse(res, 200, true, "Published posts retrieved", posts);
+    } catch (error) {
+      next(error);
     }
   }
 }
