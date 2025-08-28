@@ -1,7 +1,7 @@
-import { CommentModel } from "../database/models/comment.model.js";
+import { CommentModel } from "../database/models/comment.models.js";
 import { PostModel } from "../database/models/post.models.js";
-import { ReactionService } from "../reactions/reaction.service.js";
-import { NotificationService } from "../notifications/notification.service.js";
+import { ReactionService } from "../reactions/reactions.service.js";
+import { NotificationService } from "../notifications/notification.s.service.js";
 
 export class CommentService {
   // 🟢 Create comment or reply

@@ -1,4 +1,4 @@
-import { BookmarkModel } from "../database/models/bookmark.models.js";
+import { BookmarkModel } from "../database/models/bookmarks.models.js";
 
 export class BookmarksService {
   static async addBookmark(userId, postId) {

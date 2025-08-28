@@ -1,5 +1,5 @@
 import { PostModel } from "../database/models/post.models.js";
-import { UserModel } from "../database/models/user.models.js";
+import UserModel from "../database/models/user.models.js";
 import { CommentModel } from "../database/models/comment.models.js";
 
 export class SearchService {

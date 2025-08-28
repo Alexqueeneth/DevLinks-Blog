@@ -1,5 +1,5 @@
 import { PostService } from "./post.service.js";
-import { sendResponse } from "../common/utils/sendResponse.js";
+import { sendResponse } from "../common/utils.common.js";
 
 export class PostController {
   static async createPost(req, res, next) {

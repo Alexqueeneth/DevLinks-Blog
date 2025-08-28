@@ -1,5 +1,5 @@
 import mongoose from 'mongoose';
-import User from '../database/models/User.js';
+import User from '../database/models/user.models.js';
 
 class UserService {
   // Create user (used by auth.register typically)

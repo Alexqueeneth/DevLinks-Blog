@@ -1,4 +1,4 @@
-import { CategoryModel } from "../database/models/category.models.js";
+import { CategoryModel } from "../database/models/categories.models.js";
 
 export class CategoryService {
   static async createCategory(data) {

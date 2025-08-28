@@ -1,14 +1,14 @@
 import { Router } from "express";
-import { BookmarksController } from "./bookmarks.controller.js";
+import { BookmarksController } from "./bookmarks.controllers.js";
 import { AuthMiddleware } from "../common/middleware/auth.middleware.js";
 
 const router = Router();
 
 // add/remove bookmarks
-router.post("/:postId", AuthMiddleware.authenticate, BookmarksController.addBookmark);
-router.delete("/:postId", AuthMiddleware.authenticate, BookmarksController.removeBookmark);
+router.post("/:postId", AuthMiddleware.verifyToken, BookmarksController.addBookmark);
+router.delete("/:postId", AuthMiddleware.verifyToken, BookmarksController.removeBookmark);
 
 // list user bookmarks
-router.get("/", AuthMiddleware.authenticate, BookmarksController.getUserBookmarks);
+router.get("/", AuthMiddleware.verifyToken, BookmarksController.getUserBookmarks);
 
 export default router;

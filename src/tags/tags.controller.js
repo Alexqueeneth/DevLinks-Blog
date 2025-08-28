@@ -1,4 +1,4 @@
-import { TagService } from "./tag.service.js";
+import { TagService } from "./tags.service.js";
 import { sendResponse } from "../common/utils.common.js";
 
 export class TagController {
@@ -15,6 +15,30 @@ export class TagController {
     try {
       const tags = await TagService.getTags();
       return sendResponse(res, 200, true, "Tags fetched", tags);
+    } catch (err) {
+      next(err);
+    }
+  }
+
+  static async update(req, res, next) {
+    try {
+      const tag = await TagService.updateTag(req.params.id, req.body);
+      if (!tag) {
+        return sendResponse(res, 404, false, "Tag not found");
+      }
+      return sendResponse(res, 200, true, "Tag updated", tag);
+    } catch (err) {
+      next(err);
+    }
+  }
+
+  static async delete(req, res, next) {
+    try {
+      const tag = await TagService.deleteTag(req.params.id);
+      if (!tag) {
+        return sendResponse(res, 404, false, "Tag not found");
+      }
+      return sendResponse(res, 200, true, "Tag deleted");
     } catch (err) {
       next(err);
     }

@@ -1,4 +1,4 @@
-import { FollowerModel } from "../database/models/follower.models.js";
+import { FollowerModel } from "../database/models/followers.models.js";
 
 export class FollowersService {
   static async followUser(followerId, followingId) {
