@@ -9,6 +9,7 @@ import { LoggerService } from './common/logger.service.js';
 import { ConfigService } from './common/config.service.js';
 import { ErrorMiddleware } from './common/middleware/error.middleware.js';
 import { sendResponse } from './common/utils.common.js';
+import router from '../uploads/upload.route.js';
 import authRoutes from './Auth/auth.routes.js';
 import userRoutes from './users/user.routes.js';
 import postRoutes from './posts/post.routes.js';
@@ -20,9 +21,10 @@ import reactionRoutes from './reactions/reactions.routes.js';
 import searchRouter from './search/search.routes.js';
 import followerRoutes from "./followers/followers.routes.js";
 import bookmarkRoutes from "./bookmarks/bookmarks.routes.js";
+import dotenv from 'dotenv'
 
+dotenv.config();
 
- 
 class Application {
     constructor() {
         this.app = express();
@@ -61,6 +63,7 @@ class Application {
             message: 'API is running',
         }));
         this.app.use('/api/v1', baseRouter);
+        this.app.use("/api/v1", router);
     }
 
     setupErrorHandlers() {
