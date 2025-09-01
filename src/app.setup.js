@@ -42,6 +42,26 @@ class Application {
         this.app.use(compression());
         this.app.use(express.json({ limit: '10mb' }));
         this.app.use(express.urlencoded({ extended: true }));
+    }
+
+    setupRoutes() {
+        // Root route
+        this.app.get('/', (req, res) => sendResponse(res, 200, true, 'DevLinks Blog API', {
+            status: 'ok',
+            timestamp: new Date().toISOString(),
+            version: '1.0.0',
+            message: 'DevLinks Blog API is running',
+        }));
+
+        // Health check route
+        this.app.use('/health', (req, res) => sendResponse(res, 200, true, 'API is running', {
+            status: 'ok',
+            timestamp: new Date().toISOString(),
+            version: '1.0.0',
+            message: 'API is running',
+        }));
+
+        // API routes
         this.app.use("/api/auth", authRoutes);
         this.app.use("/api/users", userRoutes);
         this.app.use("/api/posts", postRoutes);
@@ -53,17 +73,15 @@ class Application {
         this.app.use("/api/search", searchRouter);
         this.app.use("/api/followers", followerRoutes);
         this.app.use("/api/bookmarks", bookmarkRoutes);
-    }
+        this.app.use("/api/uploads", router);
+        this.app.use("/api/upload", router); // Add singular route alias for upload
 
-    setupRoutes() {
-        this.app.use('/health', (req, res) => sendResponse(res, 200, true, 'API is running', {
-            status: 'ok',
-            timestamp: new Date().toISOString(),
-            version: '1.0.0',
-            message: 'API is running',
-        }));
+        // Legacy/redirect routes
+        this.app.get('/posts', (req, res) => res.redirect('/api/posts'));
+        this.app.use('/posts', postRoutes); // Direct mount for all /posts methods
+        
+        // Base router for /api/v1 (if needed for backwards compatibility)
         this.app.use('/api/v1', baseRouter);
-        this.app.use("/api/v1", router);
     }
 
     setupErrorHandlers() {
